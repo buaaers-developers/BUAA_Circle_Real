@@ -2,12 +2,11 @@ import 'package:buaacircle/category/category.dart';
 
 class Task {
   final String title;
-  final int durationHour;
-  final DateTime dateTime;
-  final Category category;
+  DateTime startTime;
+  DateTime endTime;
+  Category category;
 
-  const Task(
-      {this.durationHour, this.dateTime, this.title, this.category});
+  Task({this.startTime, this.endTime, this.title, this.category});
 }
 
   var defaultYear = DateTime.now().year;
@@ -15,68 +14,68 @@ class Task {
 List<Task> tasks = [
   Task(
     title: "物理作业",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 18, 10, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 6, 10, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 6, 12, 0),
     category: cateMap['course'],
   ),
   Task(
     title: "看电影",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 18, 14, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 6, 14, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 6, 16, 0),
     category: cateMap['dailylife'],
   ),
   Task(
     title: "OS实验报告",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 18, 18, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 6, 18, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 6, 20, 0),
     category: cateMap['course'],
   ),
   Task(
     title: "学生会_交稿子",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 19, 8, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 7, 8, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 7, 10, 0),
     category: cateMap['collective'],
   ),
   Task(
     title: "大班会",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 19, 10, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 7, 10, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 7, 12, 0),
     category: cateMap['meeting'],
   ),
   Task(
     title: "数学分析作业",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 19, 12, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 7, 12, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 7, 14, 0),
     category: cateMap['course'],
   ),
   Task(
     title: "团日感想",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 19, 16, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 7, 16, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 7, 18, 0),
     category: cateMap['collective'],
   ),
   Task(
     title: "艺术团选拔",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 19, 10, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 7, 10, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 7, 12, 0),
     category: cateMap['collective'],
   ),
   Task(
     title: "物理竞赛",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 20, 12, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 8, 12, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 8, 14, 0),
     category: cateMap['contest'],
   ),
   Task(
     title: "Lab4课下作业",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 20, 14, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 8, 14, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 8, 16, 0),
     category: cateMap['course'],
   ),
   Task(
     title: "看演唱会",
-    durationHour: 2,
-    dateTime: new DateTime.utc(defaultYear, 5, 20, 20, 0),
+    startTime: new DateTime.utc(defaultYear, 7, 8, 20, 0),
+    endTime: new DateTime.utc(defaultYear, 7, 8, 22, 0),
     category: cateMap['dailylife'],
   ),
 ];

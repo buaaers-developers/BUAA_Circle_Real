@@ -1,3 +1,4 @@
+import 'package:buaacircle/main_routes/task_route.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
@@ -13,6 +14,7 @@ class _TimelineRouteState extends State<TimelineRoute> {
 
   @override
   Widget build(BuildContext context) {
+    tasks.sort((up, down) => up.startTime.compareTo(down.startTime));
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       body: Timeline.builder(
@@ -29,31 +31,36 @@ class _TimelineRouteState extends State<TimelineRoute> {
         .of(context)
         .textTheme;
     return TimelineModel(
-      Card(
-        color: task.category.cardColor,
-        margin: EdgeInsets.symmetric(vertical: 16.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        clipBehavior: Clip.antiAlias,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const SizedBox(
-                height: 8.0,
-              ),
-              Text(datetime2String(task.dateTime), style: textTheme.caption),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Text(
-                task.title,
-                style: textTheme.title,
-                textAlign: TextAlign.center,
-              ),
-            ],
+      GestureDetector(
+        child: Card(
+          color: task.category.cardColor,
+          margin: EdgeInsets.symmetric(vertical: 16.0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          clipBehavior: Clip.antiAlias,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(datetime2String(task.startTime), style: textTheme.caption),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  task.title,
+                  style: textTheme.title,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
         ),
+        onTap: () {
+          modify(task);
+        },
       ),
       position:
       i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
@@ -64,8 +71,13 @@ class _TimelineRouteState extends State<TimelineRoute> {
     );
   }
 
+  void modify(Task task) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => TaskRoute(task)));
+    setState(() { });
+  }
+
   String datetime2String(DateTime dateTime) {
     return dateTime.month.toString() + "月" + dateTime.day.toString() + "日，" +
-        dateTime.hour.toString() + ":" + dateTime.minute.toString();
+        dateTime.hour.toString() + (dateTime.minute >= 10 ? ":" : ":0") + dateTime.minute.toString();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:buaacircle/main_routes/task_route.dart';
 import 'package:buaacircle/task/tasks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,11 @@ class _ScheduleRouteState extends State<ScheduleRoute> {
           laneColor: Colors.blue.shade100,
           timelineItemColor: Colors.blue.shade100,
           mainBackgroundColor: Colors.blue.shade50,
-          startHour: 8,
-          endHour: 22,
+          startHour: 0,
+          endHour: 24,
           timeItemWidth: 40,
           timeItemHeight: 50,
-          laneWidth: 95,
+          laneWidth: 75,
         ),
         laneEventsList: weeks.asMap().keys.map((week) =>
           LaneEvents(
@@ -36,10 +37,13 @@ class _ScheduleRouteState extends State<ScheduleRoute> {
             events: getTask(week + 1).map((task) =>
               TableEvent(
                 title: task.title,
-                start: TableEventTime(hour: task.dateTime.hour, minute: task.dateTime.minute),
-                end: TableEventTime(hour: task.dateTime.hour + task.durationHour, minute: task.dateTime.minute),
+                start: TableEventTime(hour: task.startTime.hour, minute: task.startTime.minute),
+                end: TableEventTime(hour: task.endTime.hour, minute: task.endTime.minute),
                 textStyle: laneTextStyle,
-                backgroundColor: task.category.iconBackgroundColor
+                backgroundColor: task.category.iconBackgroundColor,
+                onTap: () {
+                  modify(task);
+                },
               )
             ).toList(),
           )
@@ -48,10 +52,15 @@ class _ScheduleRouteState extends State<ScheduleRoute> {
     );
   }
 
+  void modify(Task task) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => TaskRoute(task)));
+    setState(() { });
+  }
+
   Lane buildLane({String name}) {
     return Lane(
       height: 50,
-      width: 95,
+      width: 75,
       name: name,
       backgroundColor: Colors.blue.shade100,
       textStyle: TextStyle(
@@ -65,7 +74,7 @@ class _ScheduleRouteState extends State<ScheduleRoute> {
   List<Task> getTask(int week) {
     List<Task> ans = [];
     for (int i = 0; i < tasks.length ; i++) {
-      if (tasks[i].dateTime.weekday == week) {
+      if (tasks[i].startTime.weekday == week) {
         ans.add(tasks[i]);
       }
     }
