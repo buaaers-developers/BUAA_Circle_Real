@@ -16,8 +16,9 @@ class TaskRoute extends StatefulWidget {
 class _TaskRouteState extends State<TaskRoute> {
 
   final Task _task;
+  final Color _themeColor;
 
-  _TaskRouteState(this._task);
+  _TaskRouteState(this._task) : this._themeColor = _task.category.cardColor;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,9 @@ class _TaskRouteState extends State<TaskRoute> {
           ),
         ),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.edit), onPressed: () {}),
-          IconButton(icon: Icon(Icons.remove), onPressed: () {}),
+          IconButton(icon: Icon(Icons.remove), onPressed: () {
+            deleteAlert();
+          }),
         ],
       ),
       body: ListView(
@@ -48,7 +50,7 @@ class _TaskRouteState extends State<TaskRoute> {
               ),
               textAlign: TextAlign.center,
             ),
-            color: _task.category.cardColor,
+            color: _themeColor,
             margin: EdgeInsets.all(20.0),
           ),
           GestureDetector(
@@ -68,7 +70,7 @@ class _TaskRouteState extends State<TaskRoute> {
             },
             child: Card(
               child: Text(
-                "date :\t" + _task.startTime.year.toString() + "-"
+                "活动日期 :\t" + _task.startTime.year.toString() + "-"
                     + _task.startTime.month.toString() + "-"
                     + _task.startTime.day.toString(),
                 style: TextStyle(
@@ -76,7 +78,7 @@ class _TaskRouteState extends State<TaskRoute> {
                 ),
                 textAlign: TextAlign.left,
               ),
-              color: _task.category.cardColor,
+              color: _themeColor,
             ),
           ),
           GestureDetector(
@@ -97,13 +99,13 @@ class _TaskRouteState extends State<TaskRoute> {
             },
             child: Card(
               child: Text(
-                "start time :\t" + timeFormat(_task.startTime.hour, _task.startTime.minute),
+                "开始时间 :\t" + timeFormat(_task.startTime.hour, _task.startTime.minute),
                 style: TextStyle(
                   fontSize: 20,
                 ),
                 textAlign: TextAlign.left,
               ),
-              color: _task.category.cardColor,
+              color: _themeColor,
             ),
           ),
           GestureDetector(
@@ -124,18 +126,18 @@ class _TaskRouteState extends State<TaskRoute> {
             },
             child: Card(
               child: Text(
-                "end time :\t" + timeFormat(_task.endTime.hour, _task.endTime.minute),
+                "结束时间 :\t" + timeFormat(_task.endTime.hour, _task.endTime.minute),
                 style: TextStyle(
                   fontSize: 20,
                 ),
                 textAlign: TextAlign.left,
               ),
-              color: _task.category.cardColor,
+              color: _themeColor,
             ),
           ),
         ],
       ),
-      backgroundColor: _task.category.cardColor,
+      backgroundColor: _themeColor,
     );
   }
 
@@ -143,4 +145,35 @@ class _TaskRouteState extends State<TaskRoute> {
     return hh.toString() + (mm >= 10 ? ":" : ":0") + mm.toString();
   }
 
+  void deleteAlert() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("提示"),
+          content: Text("是否删除该任务？"),
+          actions: <Widget>[
+            MaterialButton(
+              child: Text("否"),
+              textColor: Colors.white,
+              color: Colors.lightBlue,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            MaterialButton(
+              child: Text("是"),
+              textColor: Colors.white,
+              color: Colors.lightBlue,
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context, "delete");
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

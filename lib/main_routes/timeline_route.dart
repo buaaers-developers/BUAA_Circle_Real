@@ -72,7 +72,11 @@ class _TimelineRouteState extends State<TimelineRoute> {
   }
 
   void modify(Task task) async {
-    await Navigator.push(context, MaterialPageRoute(builder: (context) => TaskRoute(task)));
+    String signal = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => TaskRoute(task)));
+    if (signal != null && signal == "delete") {
+      tasks.remove(task);
+    }
     setState(() { });
   }
 
